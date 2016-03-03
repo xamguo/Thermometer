@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Thermo</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">Qualcomm\nChallenge</string>
+    <string name="switch_name">C/F</string>
+    <string name="system_temp">System</string>
+</resources>
