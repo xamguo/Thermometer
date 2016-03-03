@@ -10,13 +10,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by guoxiao on 3/2/16.
+ * Specified list adapter for temperature.
+ *
+ * @author Xiao Guo
  */
 public class MyListAdapter extends BaseAdapter {
 
-    private ArrayList<Double> temps;
+    private ArrayList<Double> temps;    // data
     private LayoutInflater mInflater;
-    private boolean cels;
+    private boolean cels;               // state variable for unit
 
     public MyListAdapter(Context context, ArrayList<Double> temps){
         this.mInflater = LayoutInflater.from(context);
@@ -49,13 +51,11 @@ public class MyListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder;
+        ViewHolder holder;  // View Holder for two TextViews
 
         if (convertView == null) {
 
             holder =new ViewHolder();
-
-            //可以理解为从vlist获取view  之后把view返回给ListView
 
             convertView = mInflater.inflate(R.layout.list_component, null);
             holder.day = (TextView)convertView.findViewById(R.id.day);
@@ -81,8 +81,10 @@ public class MyListAdapter extends BaseAdapter {
         public TextView temp;
     }
 
+    /** Define the jni function. */
     public native int  jniTranform(int input);
 
+    /** Load the jni function. */
     static {
         System.loadLibrary("transform");
     }

@@ -1,7 +1,12 @@
 apply plugin: 'com.android.model.application'
 
+/**
+ * New format of gradle structure and JNI can be supported
+ * directly from gradle instead of using any other declaration.
+ *
+ * @author Xiao Guo
+ * */
 model {
-
     android {
         compileSdkVersion = 23
         buildToolsVersion = "23.0.2"

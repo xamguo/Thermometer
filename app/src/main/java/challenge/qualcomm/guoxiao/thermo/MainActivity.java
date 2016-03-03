@@ -19,8 +19,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
+ * Main Activity for temperture display.
+ * Main frame is an auto hiden actionbar activity.
+ * AMBIENT_TEMPERATURE is used.
+ *
+ * @author Xiao Guo
  */
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -127,18 +130,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
         // Setting up the listView for temperature
-        ArrayList<Double> temps = new ArrayList<Double>();
 
+        ArrayList<Double> temps = new ArrayList<Double>();  // original data
+
+        // Auto generate random data.
         for(int i = 0; i < 5; i++) {
             double randNum = (-10 + (Math.random() * 50 + 1));
             temps.add(randNum);
         }
 
+        // Set for list adapater
         this.adapter = new MyListAdapter(this, temps);
         ListView list = (ListView) findViewById(R.id.days_list);
         list.setAdapter(this.adapter);
 
-        // Sensor
+        // Temperature sensor setting up
         temp = (TextView) findViewById(R.id.temp);
 
         sensormanager = (SensorManager)getSystemService(SENSOR_SERVICE);
@@ -155,13 +161,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             temp.setText("-");
         }
 
-        // Switch
+        // Switch between celsius and fahrenheit
         Switch tempSwitch = (Switch) findViewById(R.id.temp_switch);
         tempSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                // Set the state variable for degree.
                 MainActivity.adapter.isCels(!isChecked);
                 MainActivity.cels = !isChecked;
+
+                // Notify data changes to upadate the value.
                 MainActivity.adapter.notifyDataSetChanged();
                 if(MainActivity.temperature != null) {
                     MainActivity.temperature.getPower();
@@ -237,8 +247,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
+    /** Define the jni function. */
     public native int  jniTranform(int input);
 
+    /** Load the jni function. */
     static {
         System.loadLibrary("transform");
     }
